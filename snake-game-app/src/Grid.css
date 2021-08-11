@@ -1,5 +1,8 @@
 .grid {
   outline: 2px solid #61dafb;
+  height: 500px;
+  width: 500px;
+  display: inline-block;
 }
 
 .row {
@@ -11,4 +14,12 @@
   height: 50px;
   outline: 1px solid #61dafb;
   display: inline-block;
+}
+
+.snake-cell {
+  background-color: green;
+}
+
+.food-cell {
+  background-color: red;
 }
