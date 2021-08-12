@@ -100,6 +100,10 @@ const Grid = () => {
     }
 
     const nextHeadCell = grid[nextHeadCoords.row][nextHeadCoords.col];
+    if (isEatingItself(snakeCells, nextHeadCell)) {
+      handleGameOver();
+      return;
+    }
 
     const newHead = new LinkedListNode({
       row: nextHeadCoords.row,
@@ -227,6 +231,11 @@ const getDirectionCoords = (coords, direction) => {
       col: coords.col - 1,
     };
   }
+};
+
+const isEatingItself = (snakeCells, nextHeadCell) => {
+  if (snakeCells.has(nextHeadCell)) return true;
+  return false;
 };
 
 const isOutOfBounds = (coords, grid) => {
