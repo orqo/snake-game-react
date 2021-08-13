@@ -1,3 +1,11 @@
+.wrapper {
+  display: flex;
+}
+
+.instructions {
+  flex: 0 0 33%;
+}
+
 .grid {
   outline: 2px solid #61dafb;
   height: 500px;
@@ -25,5 +33,9 @@
 }
 
 h1 {
+  color: white;
+}
+
+h2 {
   color: white;
 }

@@ -26,6 +26,12 @@ const Direction = {
 
 const GRID_SIZE = 10;
 
+const Difficulty = {
+  EASY: 200,
+  MEDIUM: 150,
+  HARD: 100,
+};
+
 const startSnakeValues = (grid) => {
   const rowSize = grid.length;
   const colSize = grid[0].length;
@@ -65,25 +71,33 @@ const Grid = () => {
   };
   // gets current reference of direction
 
+  const [isRunning, setIsRunning] = useState(false);
+  const [delay, setDelay] = useState(Difficulty.EASY);
+
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
+      setIsRunning(true);
       handleKeydown(e);
     });
   });
 
-  useInterval(() => {
-    moveSnake();
-  }, 200); // speed of snake; lower is faster
+  useInterval(
+    () => {
+      moveSnake();
+    },
+    isRunning ? delay : null
+  ); // speed of snake; lower is faster
 
   const handleKeydown = (e) => {
     const newDirection = getKeyPress(e.key);
     // handles if key other than wasd is pressed
     const isValidDirection = newDirection !== "";
     if (!isValidDirection) return;
-    const snakeEatsSelf =
+    const snakeDoublesBack =
       getOppositeDirection(newDirection) === directionRef.current &&
       snakeCellsRef.current.size > 1;
-    if (snakeEatsSelf) return;
+    // stops the snake from doubling back on itself
+    if (snakeDoublesBack) return;
     setDirection(newDirection);
   };
 
@@ -174,20 +188,31 @@ const Grid = () => {
     setFoodCell(snakeValues.cell + 4);
     setSnakeCells(new Set([snakeValues.cell]));
     setDirection(Direction.RIGHT);
+    setIsRunning(false);
   };
 
   return (
     <>
       <h1>Score: {score}</h1>
-      <div className="grid">
-        {grid.map((row, rowId) => (
-          <div key={rowId} className="row">
-            {row.map((cellValue, cellId) => {
-              const cellName = getCellName(cellValue, snakeCells, foodCell);
-              return <div key={cellId} className={cellName}></div>;
-            })}
-          </div>
-        ))}
+      <div className="wrapper">
+        <div className="instructions">
+          <h2>Press any key to start the game</h2>
+          <h2>Use WASD to move</h2>
+          <h2>Choose a difficulty (default is easy)</h2>
+          <button onClick={() => setDelay(Difficulty.EASY)}>Easy</button>
+          <button onClick={() => setDelay(Difficulty.MEDIUM)}>Medium</button>
+          <button onClick={() => setDelay(Difficulty.HARD)}>Hard</button>
+        </div>
+        <div className="grid">
+          {grid.map((row, rowId) => (
+            <div key={rowId} className="row">
+              {row.map((cellValue, cellId) => {
+                const cellName = getCellName(cellValue, snakeCells, foodCell);
+                return <div key={cellId} className={cellName}></div>;
+              })}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

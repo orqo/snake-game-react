@@ -26,15 +26,3 @@ export function useInterval(callback, delay) {
     }
   }, [delay]);
 }
-
-export function reverseLinkedList(head) {
-  let prevNode = null;
-  let currNode = head;
-  while (currNode !== null) {
-    const nextNode = currNode.next;
-    currNode.next = prevNode;
-    prevNode = currNode;
-    currNode = nextNode;
-  }
-  return prevNode;
-}
