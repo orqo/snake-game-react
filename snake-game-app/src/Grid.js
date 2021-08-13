@@ -48,6 +48,7 @@ const startSnakeValues = (grid) => {
 const Grid = () => {
   const [grid, setGrid] = useState(createGrid(GRID_SIZE));
   const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
   // starting food cell is always placed in the middle right of the grid
   const [snake, setSnake] = useState(new LinkedList(startSnakeValues(grid)));
 
@@ -179,6 +180,9 @@ const Grid = () => {
 
     setFoodCell(nextFoodCell);
     setScore(score + 1);
+    if (score >= highScore) {
+      setHighScore(score + 1);
+    }
   };
 
   const handleGameOver = () => {
@@ -193,12 +197,14 @@ const Grid = () => {
 
   return (
     <>
+      <h1>High Score: {highScore}</h1>
       <h1>Score: {score}</h1>
       <div className="wrapper">
         <div className="instructions">
           <h2>Press any key to start the game</h2>
           <h2>Use WASD to move</h2>
-          <h2>Choose a difficulty (default is easy)</h2>
+          <h2>Choose a difficulty</h2>
+          <h2>Current difficulty: {getDifficulty(delay)}</h2>
           <button onClick={() => setDelay(Difficulty.EASY)}>Easy</button>
           <button onClick={() => setDelay(Difficulty.MEDIUM)}>Medium</button>
           <button onClick={() => setDelay(Difficulty.HARD)}>Hard</button>
@@ -316,6 +322,12 @@ const getOppositeDirection = (direction) => {
   if (direction === Direction.RIGHT) return Direction.LEFT;
   if (direction === Direction.DOWN) return Direction.UP;
   if (direction === Direction.LEFT) return Direction.RIGHT;
+};
+
+const getDifficulty = (difficulty) => {
+  if (difficulty === 200) return "Easy";
+  if (difficulty === 150) return "Medium";
+  if (difficulty === 100) return "Hard";
 };
 
 // function to check whether cell is a normal cell or not
