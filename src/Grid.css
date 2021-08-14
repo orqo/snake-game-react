@@ -1,0 +1,59 @@
+.wrapper {
+  display: flex;
+}
+
+.instructions {
+  flex: 0 0 33%;
+}
+
+.grid {
+  outline: 2px solid #61dafb;
+  height: 500px;
+  width: 500px;
+  display: inline-block;
+}
+
+.row {
+  height: 50px;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  outline: 1px solid #61dafb;
+  display: inline-block;
+}
+
+.snake-cell {
+  background-color: green;
+}
+
+.food-cell {
+  background-color: red;
+}
+
+h1 {
+  color: white;
+}
+
+h2 {
+  color: white;
+}
+
+button {
+  display: inline-block;
+  background-color: #7b38d8;
+  border-radius: 10px;
+  border: 4px double #cccccc;
+  color: #eeeeee;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+button:hover {
+  background-color: #f7c2f9;
+}
